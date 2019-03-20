@@ -7,10 +7,14 @@ public class Block {
     }
 
     private byte[] fillBytes(byte[] data) {
-        for(int i = data.length - 1; i < 16; i++) {
-            data[i] = 0;
+        if (data.length == 16) {
+            return data;
         }
-        return data;
+        byte[] output = new byte[16];
+        for(int i = 0; i < 16; i++) {
+            output[i] = (i > data.length - 1 ? 0 : data[i]);
+        }
+        return output;
     }
 
     public byte[] getData() {

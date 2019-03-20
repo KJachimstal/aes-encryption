@@ -18,8 +18,17 @@ class BlockTest {
     }
 
     @Test
-    void fillBytes() {
-
+    void getData() {
+        assertEquals(16, block.getData().length);
     }
 
+    @Test
+    void fillBytes() {
+        Block invalidBlock = new Block(new byte[] {
+                11, -50, 37, 81,
+                20, -46, -81, 70,
+                55, 21, -66, 23
+        });
+        assertEquals(16, invalidBlock.getData().length);
+    }
 }
