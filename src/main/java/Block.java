@@ -12,4 +12,8 @@ public class Block {
         }
         return data;
     }
+
+    public byte[] getData() {
+        return data;
+    }
 }
