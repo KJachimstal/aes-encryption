@@ -7,6 +7,7 @@ public class RoundKeys {
         rounds = key.getRounds();
         this.key = key;
         keys = new short[Constants.BLOCK_SIZE][Constants.BLOCK_SIZE * (rounds + 1)];
+        fillWithKey();
     }
 
     private void fillWithKey() {
@@ -16,5 +17,9 @@ public class RoundKeys {
                 keys[j][column] = data[Constants.BLOCK_SIZE * column + j];
             }
         }
+    }
+
+    public short[][] getKeys() {
+        return keys;
     }
 }
