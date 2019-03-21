@@ -22,6 +22,14 @@ public class Key {
         }
     }
 
+    public int getLength() {
+        return data.length;
+    }
+
+    public short[] getData() {
+        return data;
+    }
+
     public int getRounds() {
         return rounds;
     }
