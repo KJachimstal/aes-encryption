@@ -38,14 +38,31 @@ public class RoundKeys {
 
     private void addRoundKeys() {
         for (int column = key.getLength() / Constants.BLOCK_SIZE; column < roundKeysLength; column++) {
+//            Assign key columns to temporary variable
             short[] w1 = new short[Constants.BLOCK_SIZE];
+            short[] w4 = new short[Constants.BLOCK_SIZE];
+
             for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
                 w1[row] = roundKeys[row][column - 1];
+                w4[row] = roundKeys[row][column - 4];
             }
+
+//            First column in block
             if (column % Constants.BLOCK_SIZE == 0) {
+//            Use rotWord function
                 rotWord(w1);
+//            Change bytes - subBytes
+                for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
+                    w1[row] = Operations.subBytes(w1[row]);
+                }
             }
-//          to do
+
+            for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
+                roundKeys[row][column] = (short) (w4[row] ^ w1[row]);
+                if (column % Constants.BLOCK_SIZE == 0) {
+                    roundKeys[row][column] ^= roundConstants[row][column];
+                }
+            }
         }
     }
 

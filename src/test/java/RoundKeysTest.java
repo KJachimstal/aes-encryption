@@ -22,6 +22,7 @@ class RoundKeysTest {
                 assertEquals(keyString.toCharArray()[Constants.BLOCK_SIZE * i + j], keys[j][i]);
             }
         }
+
     }
 
     @Test
