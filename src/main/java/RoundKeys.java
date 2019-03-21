@@ -1,7 +1,9 @@
+import java.util.Arrays;
+
 public class RoundKeys {
     private int rounds;
     private Key key;
-    private short[][] keys;
+    private short[][] roundKeys;
     private int roundKeysLength;
     private short[][] roundConstants;
 
@@ -9,16 +11,17 @@ public class RoundKeys {
         rounds = key.getRounds();
         this.key = key;
         roundKeysLength = Constants.BLOCK_SIZE * (rounds + 1);
-        keys = new short[Constants.BLOCK_SIZE][roundKeysLength];
+        roundKeys = new short[Constants.BLOCK_SIZE][roundKeysLength];
         fillWithKey();
         buildRoundConstants();
+        addRoundKeys();
     }
 
     private void fillWithKey() {
         short[] data = key.getData();
         for (int column = 0; column < key.getLength() / Constants.BLOCK_SIZE; column++) {
             for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
-                keys[j][column] = data[Constants.BLOCK_SIZE * column + j];
+                roundKeys[j][column] = data[Constants.BLOCK_SIZE * column + j];
             }
         }
     }
@@ -35,12 +38,27 @@ public class RoundKeys {
 
     private void addRoundKeys() {
         for (int column = key.getLength() / Constants.BLOCK_SIZE; column < roundKeysLength; column++) {
-
+            short[] w1 = new short[Constants.BLOCK_SIZE];
+            for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
+                w1[row] = roundKeys[row][column - 1];
+            }
+            if (column % Constants.BLOCK_SIZE == 0) {
+                rotWord(w1);
+            }
+//          to do
         }
     }
 
+    private void rotWord(short[] column) {
+        short first = column[0];
+        for (int i = 0; i < Constants.BLOCK_SIZE - 1; i++) {
+            column[i] = column[i + 1];
+        }
+        column[column.length - 1] = first;
+    }
+
     public short[][] getKeys() {
-        return keys;
+        return roundKeys;
     }
 
     public short[][] getRoundConstants() {
