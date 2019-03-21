@@ -1,16 +1,16 @@
 public class Block {
 
-    private byte[][] data;
+    private short[][] data;
 
-    public Block(byte[][] data) {
+    public Block(short[][] data) {
         this.data = fillBytes(data);
     }
 
-    private byte[][] fillBytes(byte[][] data) {
+    private short[][] fillBytes(short[][] data) {
         if (data.length == Constants.BLOCK_SIZE * Constants.BLOCK_SIZE) {
             return data;
         }
-        byte[][] output = new byte[Constants.BLOCK_SIZE][Constants.BLOCK_SIZE];
+        short[][] output = new short[Constants.BLOCK_SIZE][Constants.BLOCK_SIZE];
         for (int i = 0; i < Constants.BLOCK_SIZE; i++) {
             for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
                 if (i >= data.length || j >= data[i].length) {
@@ -23,7 +23,7 @@ public class Block {
         return output;
     }
 
-    public byte[][] getData() {
+    public short[][] getData() {
         return data;
     }
 }

@@ -9,7 +9,7 @@ class BlockTest {
 
     @BeforeEach
     void initialize() {
-        block = new Block(new byte[][] {
+        block = new Block(new short[][] {
                 { 11, -50, 37, 81 },
                 { 20, -46, -81, 70 },
                 { 55, 21, -66, 23 },
@@ -25,7 +25,7 @@ class BlockTest {
 
     @Test
     void fillBytes() {
-        Block invalidBlock = new Block(new byte[][] {
+        Block invalidBlock = new Block(new short[][] {
                 { 11, -50, 37, 81 },
                 { 20, -46, -81, 70 },
                 { 55, 21, -66, 23 },
