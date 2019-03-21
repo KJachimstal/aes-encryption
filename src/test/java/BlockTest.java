@@ -19,8 +19,8 @@ class BlockTest {
 
     @Test
     void getData() {
-        assertEquals(4, block.getData().length);
-        assertEquals(4, block.getData()[0].length);
+        assertEquals(Constants.BLOCK_SIZE, block.getData().length);
+        assertEquals(Constants.BLOCK_SIZE, block.getData()[0].length);
     }
 
     @Test
@@ -31,7 +31,7 @@ class BlockTest {
                 { 55, 21, -66, 23 },
                 { 77, 74 }
         });
-        assertEquals(4, invalidBlock.getData().length);
-        assertEquals(4, invalidBlock.getData()[0].length);
+        assertEquals(Constants.BLOCK_SIZE, invalidBlock.getData().length);
+        assertEquals(Constants.BLOCK_SIZE, invalidBlock.getData()[0].length);
     }
 }

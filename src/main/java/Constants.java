@@ -1,4 +1,7 @@
 public class Constants {
+//    Block size
+    public static int BLOCK_SIZE = 4;
+
 //    Encryption matrix
     public static short[][] SBOX = new short[][] {
         /*       0     1     2     3     4     5     6     7     8     9     a     b     c     d     e     f */
