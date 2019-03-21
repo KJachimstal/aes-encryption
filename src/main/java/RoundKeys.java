@@ -37,6 +37,7 @@ public class RoundKeys {
     }
 
     private void addRoundKeys() {
+        int i = 0;
         for (int column = key.getLength() / Constants.BLOCK_SIZE; column < roundKeysLength; column++) {
 //            Assign key columns to temporary variable
             short[] w1 = new short[Constants.BLOCK_SIZE];
@@ -60,8 +61,12 @@ public class RoundKeys {
             for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
                 roundKeys[row][column] = (short) (w4[row] ^ w1[row]);
                 if (column % Constants.BLOCK_SIZE == 0) {
-                    roundKeys[row][column] ^= roundConstants[row][column];
+                    roundKeys[row][column] ^= roundConstants[row][i];
                 }
+            }
+
+            if (column % Constants.BLOCK_SIZE == 0) {
+                i++;
             }
         }
     }
@@ -80,5 +85,19 @@ public class RoundKeys {
 
     public short[][] getRoundConstants() {
         return roundConstants;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
+            for (int column = 0; column < roundKeys[0].length; column++) {
+                sb.append(String.format("0x%02X", roundKeys[row][column]) + " ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }
