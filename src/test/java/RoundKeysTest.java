@@ -26,4 +26,15 @@ class RoundKeysTest {
         }
     }
 
+    @Test
+    void getRoundConstants() {
+        short[][] roundConstants = roundKeys.getRoundConstants();
+        for (int i = 0; i < key.getRounds(); i++) {
+            assertEquals(Constants.RCON[i], roundConstants[0][i]);
+            for (int j = 1; j < Constants.BLOCK_SIZE; j++) {
+                assertEquals(0x0, roundConstants[j][i]);
+            }
+        }
+    }
+
 }
