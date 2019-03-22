@@ -51,7 +51,7 @@ public class RoundKeys {
 //            First column in block
             if (column % Constants.BLOCK_SIZE == 0) {
 //            Use rotWord function
-                rotWord(w1);
+                Operations.rotWord(w1);
 //            Change bytes - subBytes
                 for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
                     w1[row] = Operations.subBytes(w1[row]);
@@ -69,14 +69,6 @@ public class RoundKeys {
                 i++;
             }
         }
-    }
-
-    private void rotWord(short[] column) {
-        short first = column[0];
-        for (int i = 0; i < Constants.BLOCK_SIZE - 1; i++) {
-            column[i] = column[i + 1];
-        }
-        column[column.length - 1] = first;
     }
 
     public short[][] getKeys() {
