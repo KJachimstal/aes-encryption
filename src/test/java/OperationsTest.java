@@ -18,4 +18,15 @@ class OperationsTest {
         assertEquals(1, row[2]);
     }
 
+    @Test
+    void gfMultiplication() {
+        try {
+            assertEquals((byte)0xA8, Operations.gfMultiplication((byte)0xD4, (byte)0x02));
+        } catch (Exception ex) {
+//            fail(); not working
+            assertTrue(false);
+        }
+
+    }
+
 }

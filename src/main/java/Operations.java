@@ -1,5 +1,3 @@
-import jdk.jshell.spi.ExecutionControl;
-
 public class Operations {
     public static short subBytes(short data) {
         return Constants.SBOX[data >> 4][data & 0x0f];
@@ -25,7 +23,7 @@ public class Operations {
             for (int j = 0; j < column.length; j++) {
                 try {
                     sum ^= gfMultiplication((byte)column[j], (byte)j);
-                } catch (ExecutionControl.NotImplementedException ex) {
+                } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
             }
@@ -34,7 +32,7 @@ public class Operations {
     }
 
     public static byte gfMultiplication(byte data, byte multiplier)
-            throws ExecutionControl.NotImplementedException {
+            throws Exception {
         switch (multiplier) {
             case (byte)0x01:
                 return data;
@@ -43,7 +41,7 @@ public class Operations {
             case (byte)0x03:
                 return (byte)(gfMultiplication(data, (byte)0x02) ^ data);
             default:
-                throw new ExecutionControl.NotImplementedException("Multiplier not implemented.");
+                throw new Exception("Multiplier not implemented.");
         }
     }
 }
