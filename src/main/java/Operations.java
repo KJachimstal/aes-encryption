@@ -13,7 +13,7 @@ public class Operations {
 
     public static void shiftRow(short[] row, int shift) {
         for (int i = 0; i < shift; i++) {
-            Operations.rotWord(row);
+            rotWord(row);
         }
     }
 }
