@@ -11,5 +11,9 @@ public class Operations {
         column[column.length - 1] = first;
     }
 
-//    public static short
+    public static void shiftRow(short[] row, int shift) {
+        for (int i = 0; i < shift; i++) {
+            Operations.rotWord(row);
+        }
+    }
 }
