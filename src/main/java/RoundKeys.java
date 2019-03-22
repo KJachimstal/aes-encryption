@@ -14,7 +14,7 @@ public class RoundKeys {
         roundKeys = new short[Constants.BLOCK_SIZE][roundKeysLength];
         fillWithKey();
         buildRoundConstants();
-        addRoundKeys();
+        buildRoundKeys();
     }
 
     private void fillWithKey() {
@@ -36,7 +36,7 @@ public class RoundKeys {
         }
     }
 
-    private void addRoundKeys() {
+    private void buildRoundKeys() {
         int i = 0;
         for (int column = key.getLength() / Constants.BLOCK_SIZE; column < roundKeysLength; column++) {
 //            Assign key columns to temporary variable
