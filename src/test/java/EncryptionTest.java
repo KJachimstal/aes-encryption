@@ -82,7 +82,7 @@ class EncryptionTest {
         encryption.addRoundKey(block.getData(), 0);
         encryption.subBytes(block.getData());
         encryption.shiftRows(block.getData());
-        encryption.mixColumns(block.getData());
+        encryption.mixColumns(block.getData(), false);
 
         short[][] expected = new short[][] {
                 { 0x04, 0xe0, 0x48, 0x28 },

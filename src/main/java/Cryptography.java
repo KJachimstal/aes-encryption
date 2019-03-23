@@ -29,14 +29,14 @@ public class Cryptography {
         }
     }
 
-    public void mixColumns(short[][] data) {
+    public void mixColumns(short[][] data, boolean inverse) {
         for (int i = 0; i < data.length; i++) {
             short[] tmp = new short[data.length];
             for (int j = 0; j < data[0].length; j++) {
                 tmp[j] = data[j][i];
             }
 
-            short[] mixed = Operations.mixColumn(tmp);
+            short[] mixed = (inverse ? Operations.invMixColumn(tmp) : Operations.mixColumn(tmp));
             for (int j = 0; j < data[0].length; j++) {
                 data[j][i] = mixed[j];
             }
