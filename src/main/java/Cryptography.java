@@ -15,10 +15,14 @@ public class Cryptography {
         roundKeys = new RoundKeys(key);
     }
 
-    public void subBytes(short[][] data) {
+    public void subBytes(short[][] data, boolean inverse) {
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                data[i][j] = Operations.subByte(data[i][j]);
+                if (inverse) {
+                    data[i][j] = Operations.invSubByte(data[i][j]);
+                } else {
+                    data[i][j] = Operations.subByte(data[i][j]);
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ public class Encryption extends Cryptography {
         short[][] data = block.getData();
 
 //        SubBytes
-        subBytes(data);
+        subBytes(data, false);
 //        ShiftRows
         shiftRows(data, false);
 //        MixColumns
