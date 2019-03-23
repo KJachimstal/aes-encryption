@@ -24,7 +24,7 @@ public class Encryption extends Cryptography {
 //        SubBytes
         subBytes(data);
 //        ShiftRows
-        shiftRows(data);
+        shiftRows(data, false);
 //        MixColumns
         if (rounds != round) {
             mixColumns(data, false);

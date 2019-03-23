@@ -23,9 +23,13 @@ public class Cryptography {
         }
     }
 
-    public void shiftRows(short[][] data) {
+    public void shiftRows(short[][] data, boolean inverse) {
         for (int i = 0; i < data.length; i++) {
-            Operations.shiftRow(data[i], i);
+            if (inverse) {
+                Operations.invShiftRow(data[i], i);
+            } else {
+                Operations.shiftRow(data[i], i);
+            }
         }
     }
 

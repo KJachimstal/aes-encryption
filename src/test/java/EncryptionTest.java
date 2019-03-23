@@ -61,7 +61,7 @@ class EncryptionTest {
     void shiftRows() {
         encryption.addRoundKey(block.getData(), 0);
         encryption.subBytes(block.getData());
-        encryption.shiftRows(block.getData());
+        encryption.shiftRows(block.getData(), false);
 
         short[][] expected = new short[][] {
             { 0xd4, 0xe0, 0xb8, 0x1e },
@@ -81,7 +81,7 @@ class EncryptionTest {
     void mixColumns() {
         encryption.addRoundKey(block.getData(), 0);
         encryption.subBytes(block.getData());
-        encryption.shiftRows(block.getData());
+        encryption.shiftRows(block.getData(), false);
         encryption.mixColumns(block.getData(), false);
 
         short[][] expected = new short[][] {
