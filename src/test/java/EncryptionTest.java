@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileOutputStream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EncryptionTest {
@@ -11,21 +9,20 @@ class EncryptionTest {
 
     @BeforeEach
     void initialize() {
-        encryption = new Encryption();
+        Block[] blocks = new Block[] {
+                new Block(new short[][] {
+                        { 0x32, 0x88, 0x31, 0xe0 },
+                        { 0x43, 0x5a, 0x31, 0x37 },
+                        { 0xf6, 0x30, 0x98, 0x07 },
+                        { 0xa8, 0x8d, 0xa2, 0x34 }
+                })
+        };
+        Key key = new Key("abcdefghijklmnop");
+        encryption = new Encryption(blocks, key);
     }
 
     @Test
-    void loadFile() {
-        try {
-            byte[] data = encryption.loadFile("data/image.jpg");
-            assertNotEquals(0, data.length);
-
-            try (FileOutputStream fos = new FileOutputStream("data/bytes.jpg")) {
-                fos.write(data);
-            }
-        } catch (Exception e) {
-
-        }
-
+    void encrypt() {
+        encryption.encrypt();
     }
 }
