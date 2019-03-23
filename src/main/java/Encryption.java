@@ -86,4 +86,8 @@ public class Encryption {
             }
         }
     }
+
+    public Block[] getBlocks() {
+        return blocks;
+    }
 }
