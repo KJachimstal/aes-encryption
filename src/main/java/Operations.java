@@ -1,8 +1,17 @@
 public class Operations {
-    public static short subByte(short data) {
+
+    private static short _subByte(short data, boolean inverse) {
         int x = (data & 0xf0) >> 4;
         int y = (data & 0x0f);
-        return Constants.SBOX[x][y];
+        return (inverse ? Constants.INVSBOX[x][y] : Constants.SBOX[x][y]);
+    }
+
+    public static short subByte(short data) {
+        return _subByte(data, false);
+    }
+
+    public static short invSubByte(short data) {
+        return _subByte(data, true);
     }
 
     public static void rotWord(short[] column) {

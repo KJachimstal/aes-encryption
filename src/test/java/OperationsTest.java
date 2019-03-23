@@ -5,8 +5,13 @@ class OperationsTest {
 
     @Test
     void subBytes() {
-        assertEquals(0xff, Operations.subBytes((short) 0x7d));
-        assertEquals(0x16, Operations.subBytes((short) 0xff));
+        assertEquals(0xff, Operations.subByte((short) 0x7d));
+        assertEquals(0x16, Operations.subByte((short) 0xff));
+    }
+
+    void invSubBytes() {
+        assertEquals(0x7d, Operations.invSubByte((short) 0xff));
+        assertEquals(0xff, Operations.invSubByte((short) 0x16));
     }
 
     @Test
