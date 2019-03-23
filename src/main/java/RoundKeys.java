@@ -21,7 +21,7 @@ public class RoundKeys {
         short[] data = key.getData();
         for (int column = 0; column < key.getLength() / Constants.BLOCK_SIZE; column++) {
             for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
-                roundKeys[j][column] = data[Constants.BLOCK_SIZE * column + j];
+                roundKeys[column][j] = data[Constants.BLOCK_SIZE * column + j];
             }
         }
     }
