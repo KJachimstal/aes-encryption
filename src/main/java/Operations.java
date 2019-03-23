@@ -46,7 +46,7 @@ public class Operations {
 //        Temporary array for results
         short[] output = new short[column.length];
 //        Set galois array
-        short[][] galois = (inverse ? Constants.GALOIS : Constants.GALOIS);
+        short[][] galois = (inverse ? Constants.INVGALOIS : Constants.GALOIS);
 
 //        Assign values
         for (int i = 0; i < column.length; i++) {
