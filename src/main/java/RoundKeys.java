@@ -81,15 +81,6 @@ public class RoundKeys {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
-            for (int column = 0; column < roundKeys[0].length; column++) {
-                sb.append(String.format("0x%02X", roundKeys[row][column]) + " ");
-            }
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        return Operations.hexToString(roundKeys);
     }
 }

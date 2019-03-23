@@ -56,4 +56,17 @@ public class Operations {
                 throw new Exception("Multiplier not implemented.");
         }
     }
+
+    public static String hexToString(short[][] data) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                sb.append(String.format("0x%02X", data[i][j]) + " ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString() + "\n";
+    }
 }

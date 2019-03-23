@@ -26,4 +26,9 @@ public class Block {
     public short[][] getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return Operations.hexToString(data);
+    }
 }
