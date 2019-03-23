@@ -111,4 +111,14 @@ public class Operations {
 
         return sb.toString() + "\n";
     }
+
+    public static void addRoundKey(short[][] data, RoundKeys roundKeys, int round) {
+        short[][] keys = roundKeys.getKeys();
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                int roundShift = round * Constants.BLOCK_SIZE;
+                data[i][j] = (short)(data[i][j] ^ keys[i][j + roundShift]);
+            }
+        }
+    }
 }

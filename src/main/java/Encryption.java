@@ -73,13 +73,7 @@ public class Encryption {
     }
 
     public void addRoundKey(short[][] data, int round) {
-        short[][] keys = roundKeys.getKeys();
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[0].length; j++) {
-                int roundShift = round * Constants.BLOCK_SIZE;
-                data[i][j] = (short)(data[i][j] ^ keys[i][j + roundShift]);
-            }
-        }
+        Operations.addRoundKey(data, roundKeys, round);
     }
 
     public Block[] getBlocks() {
