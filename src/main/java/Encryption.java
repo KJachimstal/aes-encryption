@@ -34,8 +34,8 @@ public class Encryption {
 //        MixColumns
 
 //        AddRoundKey
-
-        System.out.println(block);
+//
+//        System.out.println(block);
     }
 
     public void subBytes(short[][] data) {
@@ -49,6 +49,20 @@ public class Encryption {
     public void shiftRows(short[][] data) {
         for (int i = 0; i < data.length; i++) {
             Operations.shiftRow(data[i], i);
+        }
+    }
+
+    public void mixColumns(short[][] data) {
+        for (int i = 0; i < data.length; i++) {
+            short[] tmp = new short[data.length];
+            for (int j = 0; j < data[0].length; j++) {
+                tmp[j] = data[j][i];
+            }
+
+            short[] mixed = Operations.mixColumn(tmp);
+            for (int j = 0; j < data[0].length; j++) {
+                data[j][i] = mixed[j];
+            }
         }
     }
 }
