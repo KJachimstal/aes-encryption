@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OperationsTest {
@@ -9,13 +10,15 @@ class OperationsTest {
         assertEquals(0x16, Operations.subByte((short) 0xff));
     }
 
+    @Test
     void invSubBytes() {
         assertEquals(0x7d, Operations.invSubByte((short) 0xff));
         assertEquals(0xff, Operations.invSubByte((short) 0x16));
     }
 
+    @Test
     void invRotWord() {
-        short[] word = { 0x01, 0x02, 0x03, 0x04 };
+        short[] word = new short[] { 0x01, 0x02, 0x03, 0x04 };
         Operations.invRotWord(word);
         assertEquals(0x04, word[0]);
         assertEquals(0x01, word[1]);
@@ -30,6 +33,16 @@ class OperationsTest {
         assertEquals(3, row[0]);
         assertEquals(4, row[1]);
         assertEquals(1, row[2]);
+    }
+
+    @Test
+    void invShiftRow() {
+        short[] row = new short[] { 1, 2, 3, 4 };
+        Operations.invShiftRow(row, 2);
+        assertEquals(3, row[0]);
+        assertEquals(4, row[1]);
+        assertEquals(1, row[2]);
+        assertEquals(2, row[3]);
     }
 
     @Test
