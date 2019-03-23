@@ -11,6 +11,11 @@ public class Key {
         rounds = calcRounds(data.length);
     }
 
+    public Key(short[] key) {
+        data = key;
+        rounds = calcRounds(data.length);
+    }
+
     private int calcRounds(int key_length) {
         switch (key_length) {
             case 24:
