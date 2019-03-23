@@ -19,6 +19,17 @@ class OperationsTest {
     }
 
     @Test
+    void mixColumn() {
+        short[] column = new short[] { 0xd4, 0xbf, 0x5d, 0x30 };
+        short[] result = Operations.mixColumn(column);
+        assertEquals((byte)0x04, result[0]);
+        assertEquals((byte)0x66, result[1]);
+        assertEquals((byte)0x81, result[2]);
+        assertEquals((byte)0xe5, result[3]);
+
+    }
+
+    @Test
     void gfMultiplication() {
         try {
             assertEquals((byte)0xA8, Operations.gfMultiplication((byte)0xD4, (byte)0x02));
