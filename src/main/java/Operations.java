@@ -53,7 +53,7 @@ public class Operations {
             short sum = 0;
             for (int j = 0; j < column.length; j++) {
                 try {
-                    sum ^= gfMultiplication(column[j], (byte)galois[i][j]);
+                    sum ^= GF(column[j], (byte)galois[i][j]);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -71,8 +71,9 @@ public class Operations {
         return _mixColumn(column, true);
     }
 
-    public static short gfMultiplication(short data, byte multiplier)
+    public static short GF(short data, byte multiplier)
             throws Exception {
+        byte m2 = (byte) 0x02;
         switch (multiplier) {
             case (byte)0x01:
                 return (byte)data;
@@ -83,8 +84,16 @@ public class Operations {
                     return (byte)((byte)(data << 1) ^ (byte)0x1b);
                 }
             case (byte)0x03:
-                byte x = (byte)gfMultiplication(data, (byte)0x02);
+                byte x = (byte)GF(data, (byte)0x02);
                 return (byte)(x ^ (byte)data);
+            case (byte)0x09:
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ data);
+            case (byte)0x0b:
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(data, m2) ^ data);
+            case (byte)0x0d:
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(GF(data, m2), m2) ^ data);
+            case (byte)0x0e:
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(GF(data, m2), m2) ^ GF(data, m2));
             default:
                 throw new Exception("Multiplier not implemented.");
         }

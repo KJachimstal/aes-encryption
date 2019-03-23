@@ -68,8 +68,8 @@ class OperationsTest {
     @Test
     void gfMultiplication() {
         try {
-            assertEquals((byte)0xA8, Operations.gfMultiplication((byte)0xD4, (byte)0x02));
-            assertEquals((byte)0xC1, Operations.gfMultiplication((byte)0xBF, (byte)0x03));
+            assertEquals((byte)0xA8, Operations.GF((byte)0xD4, (byte)0x02));
+            assertEquals((byte)0xC1, Operations.GF((byte)0xBF, (byte)0x03));
         } catch (Exception ex) {
 //            fail(); not working
             assertEquals(false, true);
