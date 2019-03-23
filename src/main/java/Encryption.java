@@ -27,11 +27,6 @@ public class Encryption {
                 encryptBlock(blocks[b], i + 1);
             }
         }
-
-//        Output
-        for (int b = 0; b < blocks.length; b++) {
-            System.out.println("Ciphertext: \n" + blocks[b]);
-        }
     }
 
     private void encryptBlock(Block block, int round) {
