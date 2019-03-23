@@ -22,6 +22,14 @@ public class Operations {
         column[column.length - 1] = first;
     }
 
+    public static void invRotWord(short[] column) {
+        short last = column[column.length - 1];
+        for (int i = Constants.BLOCK_SIZE - 1; i > 1; i++) {
+            column[i] = column[i - 1];
+        }
+        column[0] = last;
+    }
+
     public static void shiftRow(short[] row, int shift) {
         for (int i = 0; i < shift; i++) {
             rotWord(row);

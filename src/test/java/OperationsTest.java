@@ -14,6 +14,15 @@ class OperationsTest {
         assertEquals(0xff, Operations.invSubByte((short) 0x16));
     }
 
+    void invRotWord() {
+        short[] word = { 0x01, 0x02, 0x03, 0x04 };
+        Operations.invRotWord(word);
+        assertEquals(0x04, word[0]);
+        assertEquals(0x01, word[1]);
+        assertEquals(0x02, word[2]);
+        assertEquals(0x03, word[3]);
+    }
+
     @Test
     void shiftRow() {
         short[] row = new short[] { 1, 2, 3, 4 };
