@@ -14,6 +14,11 @@ class DataUtilsTest {
             encryption.encrypt();
             DataUtils.saveFile(encryption.getBlocks(), "data/output.encrypted");
 
+            Block[] blocks_encrypted = DataUtils.loadFile("data/output.encrypted");
+            Decryption decryption = new Decryption(blocks_encrypted, new Key("secretpassword12"));
+            decryption.decrypt();
+            DataUtils.saveFile(decryption.getBlocks(), "data/output_decrypted.jpg");
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

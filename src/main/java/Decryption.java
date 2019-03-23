@@ -11,6 +11,11 @@ public class Decryption extends Cryptography {
                 decryptBlock(blocks[b], i + 1);
             }
         }
+
+//        Add round key
+        for (int b = 0; b < blocks.length; b++) {
+            addRoundKey(blocks[b].getData(), 0);
+        }
     }
 
     public void decryptBlock(Block block, int round) {
@@ -24,5 +29,7 @@ public class Decryption extends Cryptography {
         }
 //        InvShiftRows
         shiftRows(data, true);
+//        InvSubBytes
+        subBytes(data, true);
     }
 }

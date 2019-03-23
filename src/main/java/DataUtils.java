@@ -9,7 +9,7 @@ public class DataUtils {
     public static Block[] loadFile(String filename) throws IOException {
         Path path = Paths.get(filename);
         byte[] bytes = Files.readAllBytes(path);
-        int numberOfBlocks = (int) Math.ceil(bytes.length / (Constants.BLOCK_SIZE * Constants.BLOCK_SIZE)) + 1;
+        int numberOfBlocks = (int) Math.ceil(bytes.length / (double)(Constants.BLOCK_SIZE * Constants.BLOCK_SIZE));
         Block[] blocks = new Block[numberOfBlocks];
         int processed = 0, bi = 0;
 
