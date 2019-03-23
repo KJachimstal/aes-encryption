@@ -31,7 +31,22 @@ class EncryptionTest {
 
     @Test
     void encrypt() {
+        short[][] expected = new short[][] {
+                { 0x39, 0x02, 0xdc, 0x19 },
+                { 0x25, 0xdc, 0x11, 0x6a },
+                { 0x84, 0x09, 0x85, 0x0b },
+                { 0x1d, 0xfb, 0x97, 0x32 }
+        };
         encryption.encrypt();
+
+        Block[] blocks = encryption.getBlocks();
+        for (int b = 0; b < blocks.length; b++) {
+            for (int i = 0; i < block.getData().length; i++) {
+                for (int j = 0; j < block.getData()[0].length; j++) {
+                    assertEquals(expected[i][j], blocks[b].getData()[i][j]);
+                }
+            }
+        }
     }
 
     @Test
