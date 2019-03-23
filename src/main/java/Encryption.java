@@ -25,10 +25,12 @@ public class Encryption {
     }
 
     private void encryptBlock(Block block) {
-//        SubBytes
-        subBytes(block.getData());
-//        ShiftRows
+        short[][] data = block.getData();
 
+//        SubBytes
+        subBytes(data);
+//        ShiftRows
+        shiftRows(data);
 //        MixColumns
 
 //        AddRoundKey
@@ -41,6 +43,12 @@ public class Encryption {
             for (int j = 0; j < data[0].length; j++) {
                 data[i][j] = Operations.subBytes(data[i][j]);
             }
+        }
+    }
+
+    public void shiftRows(short[][] data) {
+        for (int i = 0; i < data.length; i++) {
+            Operations.shiftRow(data[i], i);
         }
     }
 }

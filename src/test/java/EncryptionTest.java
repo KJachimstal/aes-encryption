@@ -51,4 +51,22 @@ class EncryptionTest {
             }
         }
     }
+
+    @Test
+    void shiftRows() {
+        encryption.shiftRows(block.getData());
+
+        short[][] expected = new short[][] {
+            { 0x32, 0x88, 0x31, 0xe0 },
+            { 0x5a, 0x31, 0x37, 0x43 },
+            { 0x98, 0x07, 0xf6, 0x30 },
+            { 0x34, 0xa8, 0x8d, 0xa2}
+        };
+
+        for (int i = 0; i < block.getData().length; i++) {
+            for (int j = 0; j < block.getData()[0].length; j++) {
+                assertEquals(expected[i][j], block.getData()[i][j]);
+            }
+        }
+    }
 }
