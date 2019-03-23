@@ -25,7 +25,6 @@ public class Decryption extends Cryptography {
         addRoundKey(data, round);
 //        InvMixColumns
         if (rounds != round) {
-            System.out.println(round);
             mixColumns(data, true);
         }
 //        InvShiftRows
