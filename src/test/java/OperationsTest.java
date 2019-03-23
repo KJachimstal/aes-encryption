@@ -53,7 +53,16 @@ class OperationsTest {
         assertEquals((byte)0x66, result[1]);
         assertEquals((byte)0x81, result[2]);
         assertEquals((byte)0xe5, result[3]);
+    }
 
+    @Test
+    void invMixColumn() {
+        short[] column = new short[] { 0x04, 0x66, 0x81, 0xe5 };
+        short[] result = Operations.invMixColumn(column);
+        assertEquals((byte)0xd4, result[0]);
+        assertEquals((byte)0xbf, result[1]);
+        assertEquals((byte)0x5d, result[2]);
+        assertEquals((byte)0x30, result[3]);
     }
 
     @Test

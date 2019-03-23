@@ -42,16 +42,18 @@ public class Operations {
         }
     }
 
-    public static short[] mixColumn(short[] column) {
+    private static short[] _mixColumn(short[] column, boolean inverse) {
 //        Temporary array for results
         short[] output = new short[column.length];
+//        Set galois array
+        short[][] galois = (inverse ? Constants.GALOIS : Constants.GALOIS);
 
 //        Assign values
         for (int i = 0; i < column.length; i++) {
             short sum = 0;
             for (int j = 0; j < column.length; j++) {
                 try {
-                    sum ^= gfMultiplication(column[j], (byte)Constants.GALOIS[i][j]);
+                    sum ^= gfMultiplication(column[j], (byte)galois[i][j]);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -59,6 +61,14 @@ public class Operations {
             output[i] = sum;
         }
         return output;
+    }
+
+    public static short[] mixColumn(short[] column) {
+        return _mixColumn(column, false);
+    }
+
+    public static short[] invMixColumn(short[] column) {
+        return _mixColumn(column, true);
     }
 
     public static short gfMultiplication(short data, byte multiplier)
