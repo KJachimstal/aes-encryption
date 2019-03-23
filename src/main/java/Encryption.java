@@ -16,15 +16,25 @@ public class Encryption {
     }
 
     public void encrypt() {
+//        Add round key
+        for (int b = 0; b < blocks.length; b++) {
+            addRoundKey(blocks[b].getData(), 0);
+        }
+
 //        Rounds
         for (int i = 0; i < rounds; i++) {
             for (int b = 0; b < blocks.length; b++) {
-                encryptBlock(blocks[b]);
+                encryptBlock(blocks[b], i + 1);
             }
+        }
+
+//        Output
+        for (int b = 0; b < blocks.length; b++) {
+            System.out.println("Ciphertext: \n" + blocks[b]);
         }
     }
 
-    private void encryptBlock(Block block) {
+    private void encryptBlock(Block block, int round) {
         short[][] data = block.getData();
 
 //        SubBytes
@@ -32,10 +42,11 @@ public class Encryption {
 //        ShiftRows
         shiftRows(data);
 //        MixColumns
-
+        if (rounds != round) {
+            mixColumns(data);
+        }
 //        AddRoundKey
-//
-//        System.out.println(block);
+        addRoundKey(data, round);
     }
 
     public void subBytes(short[][] data) {
@@ -62,6 +73,16 @@ public class Encryption {
             short[] mixed = Operations.mixColumn(tmp);
             for (int j = 0; j < data[0].length; j++) {
                 data[j][i] = mixed[j];
+            }
+        }
+    }
+
+    public void addRoundKey(short[][] data, int round) {
+        short[][] keys = roundKeys.getKeys();
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                int roundShift = round * Constants.BLOCK_SIZE;
+                data[i][j] = (short)(data[i][j] ^ keys[i][j + roundShift]);
             }
         }
     }
