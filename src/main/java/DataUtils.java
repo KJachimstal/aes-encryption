@@ -18,7 +18,7 @@ public class DataUtils {
             for (int i = 0; i < Constants.BLOCK_SIZE; i++) {
                 for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
                     if (processed + 1 < bytes.length) {
-                        tmp[j][i] = bytes[processed++];
+                        tmp[j][i] = (short)(((short) bytes[processed++]) & 0xff);
                     }
                 }
             }

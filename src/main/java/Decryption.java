@@ -6,9 +6,9 @@ public class Decryption extends Cryptography {
 
     public void decrypt() {
 //        Rounds
-        for (int i = rounds - 1; i > 0; i--) {
+        for (int i = rounds; i > 0; i--) {
             for (int b = 0; b < blocks.length; b++) {
-                decryptBlock(blocks[b], i + 1);
+                decryptBlock(blocks[b], i);
             }
         }
 
@@ -24,7 +24,8 @@ public class Decryption extends Cryptography {
 //        AddRoundKey
         addRoundKey(data, round);
 //        InvMixColumns
-        if (rounds > 1) {
+        if (rounds != round) {
+            System.out.println(round);
             mixColumns(data, true);
         }
 //        InvShiftRows
