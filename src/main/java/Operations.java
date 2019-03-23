@@ -1,8 +1,8 @@
-import java.util.Arrays;
-
 public class Operations {
     public static short subBytes(short data) {
-        return Constants.SBOX[data >> 4][data & 0x0f];
+        int x = (data & 0xf0) >> 4;
+        int y = (data & 0x0f);
+        return Constants.SBOX[x][y];
     }
 
     public static void rotWord(short[] column) {
