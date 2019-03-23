@@ -54,7 +54,7 @@ public class RoundKeys {
                 Operations.rotWord(w1);
 //            Change bytes - subBytes
                 for (int row = 0; row < Constants.BLOCK_SIZE; row++) {
-                    w1[row] = Operations.subBytes(w1[row]);
+                    w1[row] = Operations.subByte(w1[row]);
                 }
             }
 

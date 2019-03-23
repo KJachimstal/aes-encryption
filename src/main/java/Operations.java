@@ -1,5 +1,5 @@
 public class Operations {
-    public static short subBytes(short data) {
+    public static short subByte(short data) {
         int x = (data & 0xf0) >> 4;
         int y = (data & 0x0f);
         return Constants.SBOX[x][y];
