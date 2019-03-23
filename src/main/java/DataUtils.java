@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,5 +26,23 @@ public class DataUtils {
         }
 
         return blocks;
+    }
+
+    public static void saveFile(Block[] blocks, String filename) throws IOException {
+        byte[] output = new byte[blocks.length * Constants.BLOCK_SIZE * Constants.BLOCK_SIZE];
+
+        int o = 0;
+        for (Block b : blocks) {
+            short[][] data = b.getData();
+            for (int i = 0; i < data.length; i++) {
+                for (int j = 0; j < data.length; j++) {
+                    output[o++] = (byte) data[j][i];
+                }
+            }
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(filename)) {
+            fos.write(output);
+        }
     }
 }

@@ -10,9 +10,10 @@ class DataUtilsTest {
     void loadFile() {
         try {
             Block[] blocks = DataUtils.loadFile("data/image.jpg");
-            for(Block b : blocks) {
-                System.out.println(b);
-            }
+            Encryption encryption = new Encryption(blocks, new Key("secretpassword12"));
+            encryption.encrypt();
+            DataUtils.saveFile(encryption.getBlocks(), "data/output.encrypted");
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
