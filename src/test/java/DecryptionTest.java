@@ -39,7 +39,6 @@ class DecryptionTest {
 
         Block[] blocks = decryption.getBlocks();
         for (int b = 0; b < blocks.length; b++) {
-            System.out.println(blocks[b]);
             for (int i = 0; i < block.getData().length; i++) {
                 for (int j = 0; j < block.getData()[0].length; j++) {
                     assertEquals(expected[i][j], blocks[b].getData()[i][j]);
