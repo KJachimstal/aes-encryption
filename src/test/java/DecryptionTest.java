@@ -85,4 +85,24 @@ class DecryptionTest {
         }
     }
 
+    @Test
+    void invSubBytes() {
+        decryption.addRoundKey(block.getData(), 10);
+        decryption.shiftRows(block.getData(), true);
+        decryption.subBytes(block.getData(), true);
+
+        short[][] expected = new short[][] {
+                { 0xeb, 0x59, 0x8b, 0x1b },
+                { 0x40, 0x2e, 0xa1, 0xc3 },
+                { 0xf2, 0x38, 0x13, 0x42 },
+                { 0x1e, 0x84, 0xe7, 0xd2 }
+        };
+
+        for (int i = 0; i < block.getData().length; i++) {
+            for (int j = 0; j < block.getData()[0].length; j++) {
+                assertEquals(expected[i][j], block.getData()[i][j]);
+            }
+        }
+    }
+
 }
