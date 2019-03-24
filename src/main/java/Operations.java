@@ -71,27 +71,27 @@ public class Operations {
         return _mixColumn(column, true);
     }
 
-    public static short GF(short data, byte multiplier)
+    public static byte GF(short data, byte multiplier)
             throws Exception {
         byte m2 = (byte) 0x02;
         switch (multiplier) {
             case (byte)0x01:
                 return (byte)data;
             case (byte)0x02:
-                if (data < 0x80) {
+                if ((short)(data & 0xff) < 0x80) {
                     return (byte)((byte)data << 1);
                 } else {
                     return (byte)((byte)(data << 1) ^ (byte)0x1b);
                 }
             case (byte)0x03:
-                byte x = (byte)GF(data, (byte)0x02);
+                byte x = GF(data, (byte)0x02);
                 return (byte)(x ^ (byte)data);
             case (byte)0x09:
                 return (byte)(GF(GF(GF(data, m2), m2), m2) ^ data);
             case (byte)0x0b:
-                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(data, m2) ^ data);
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(data, m2) ^ (byte)data);
             case (byte)0x0d:
-                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(GF(data, m2), m2) ^ data);
+                return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(GF(data, m2), m2) ^ (byte)data);
             case (byte)0x0e:
                 return (byte)(GF(GF(GF(data, m2), m2), m2) ^ GF(GF(data, m2), m2) ^ GF(data, m2));
             default:
@@ -104,7 +104,7 @@ public class Operations {
 
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                sb.append(String.format("0x%02X", data[i][j]) + " ");
+                sb.append(String.format("0x%02X", (byte)(data[i][j] & 0xff)) + " ");
             }
             sb.append("\n");
         }

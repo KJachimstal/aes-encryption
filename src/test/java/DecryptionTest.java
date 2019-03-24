@@ -105,4 +105,40 @@ class DecryptionTest {
         }
     }
 
+    @Test
+    void invMixColumns() {
+        decryption.addRoundKey(block.getData(), 10);
+        decryption.shiftRows(block.getData(), true);
+        decryption.subBytes(block.getData(), true);
+        decryption.addRoundKey(block.getData(), 9);
+
+//        Add round key test
+        short[][] expected = new short[][] {
+                { 0x47, 0x40, 0xa3, 0x4c },
+                { 0x37, 0xd4, 0x70, 0x9f },
+                { 0x94, 0xe4, 0x3a, 0x42 },
+                { 0xed, 0xa5, 0xa6, 0xbc }
+        };
+        for (int i = 0; i < block.getData().length; i++) {
+            for (int j = 0; j < block.getData()[0].length; j++) {
+                assertEquals(expected[i][j], block.getData()[i][j]);
+            }
+        }
+
+        decryption.mixColumns(block.getData(), true);
+
+        expected = new short[][] {
+                { 0x87, 0xf2, 0x4d, 0x97 },
+                { 0x6e, 0x4c, 0x90, 0xec },
+                { 0x46, 0xe7, 0x4a, 0xc3 },
+                { 0xa6, 0x8c, 0xd8, 0x95 }
+        };
+
+        for (int i = 0; i < block.getData().length; i++) {
+            for (int j = 0; j < block.getData()[0].length; j++) {
+                assertEquals((byte)expected[i][j], block.getData()[i][j]);
+            }
+        }
+    }
+
 }
