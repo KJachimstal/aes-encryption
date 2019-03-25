@@ -1,15 +1,14 @@
+import aes.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DataUtilsTest {
 
     @Test
     void loadFile() {
         try {
-            //Block[] blocks_original = DataUtils.loadFile("data/input.txt");
+            //aes.Block[] blocks_original = aes.DataUtils.loadFile("data/input.txt");
             Block[] blocks = DataUtils.loadFile("data/image.jpg");
             Encryption encryption = new Encryption(blocks, new Key("secretpassword12"));
             encryption.encrypt();

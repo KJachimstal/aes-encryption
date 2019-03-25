@@ -1,3 +1,6 @@
+import aes.Block;
+import aes.Decryption;
+import aes.Key;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,3 +1,6 @@
+import aes.Block;
+import aes.Encryption;
+import aes.Key;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +54,7 @@ class EncryptionTest {
 
     @Test
     void subBytes() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        Method method = Encryption.class.getDeclaredMethod("subBytes");
+//        Method method = aes.Encryption.class.getDeclaredMethod("subBytes");
 //        method.setAccessible(true);
 //
 //        method.invoke(encryption, data);

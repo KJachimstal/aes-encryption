@@ -1,3 +1,6 @@
+import aes.Constants;
+import aes.Key;
+import aes.RoundKeys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +22,7 @@ class RoundKeysTest {
         short[][] keys = roundKeys.getKeys();
         for (int i = 0; i < key.getLength() / Constants.BLOCK_SIZE; i++) {
             for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
-                assertEquals(keyString.toCharArray()[Constants.BLOCK_SIZE * i + j], keys[j][i]);
+                assertEquals(keyString.toCharArray()[Constants.BLOCK_SIZE * i + j], keys[i][j]);
             }
         }
     }

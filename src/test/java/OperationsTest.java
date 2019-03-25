@@ -1,3 +1,4 @@
+import aes.Operations;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,17 +65,4 @@ class OperationsTest {
         assertEquals((byte)0x5d, result[2]);
         assertEquals((byte)0x30, result[3]);
     }
-
-    @Test
-    void gfMultiplication() {
-        try {
-            assertEquals((byte)0xA8, Operations.GF((byte)0xD4, (byte)0x02));
-            assertEquals((byte)0xC1, Operations.GF((byte)0xBF, (byte)0x03));
-        } catch (Exception ex) {
-//            fail(); not working
-            assertEquals(false, true);
-        }
-
-    }
-
 }
