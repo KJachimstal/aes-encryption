@@ -1,5 +1,9 @@
+import aes.Block;
+import aes.DataUtils;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +19,9 @@ public class Application {
     private JTextArea log;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+//    Model
+    private Block[] blocks;
+
     public Application(JFrame frame) {
         this.frame = frame;
         createMenu();
@@ -22,15 +29,21 @@ public class Application {
         DefaultCaret caret = (DefaultCaret) log.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-        selectFile.addActionListener(e -> openDialog());
+        selectFile.addActionListener(e -> inputFileDialog());
         button1.addActionListener(e -> test());
     }
 
-    public void openDialog() {
+    public void inputFileDialog() {
         JFileChooser fc = new JFileChooser();
         int returnValue = fc.showOpenDialog(mainPanel);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            System.out.println(fc.getSelectedFile().getName());
+            String selectedFile = fc.getSelectedFile().getPath();
+            try {
+                blocks = DataUtils.loadFile(selectedFile);
+                JOptionPane.showMessageDialog(frame, blocks.length + " data blocks have been loaded.", "File loaded", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(frame, "Could not load file: " + selectedFile, "Loading error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -48,11 +61,22 @@ public class Application {
     private void createMenu() {
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu menu = new JMenu("File");
-        menuBar.add(menu);
+//        File
+        JMenu file = new JMenu("File");
+        menuBar.add(file);
 
         JMenuItem menuItem = new JMenuItem("...");
-        menu.add(menuItem);
+        file.add(menuItem);
+
+//        Key
+        JMenu key = new JMenu("Key");
+        menuBar.add(key);
+
+        JMenuItem key_item_1 = new JMenuItem("Import key");
+        JMenuItem key_item_2 = new JMenuItem("Export key");
+
+        key.add(key_item_1);
+        key.add(key_item_2);
 
         frame.setJMenuBar(menuBar);
     }
