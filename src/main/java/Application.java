@@ -23,6 +23,7 @@ public class Application {
     private JLabel infoInputFile;
     private JLabel infoBlocksCount;
     private JLabel infoFileSize;
+    private JLabel infoBlockSize;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
@@ -39,6 +40,9 @@ public class Application {
 //        Buttons
         setIcon(inputFile, "file_in.png");
         setIcon(importKeyButton, "cipher_key.png");
+
+//        Info
+        infoBlockSize.setText(Constants.BLOCK_SIZE + "x" + Constants.BLOCK_SIZE);
 
         inputFile.addActionListener(e -> inputFileDialog());
         importKeyButton.addActionListener(e -> test());
