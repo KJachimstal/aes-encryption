@@ -18,12 +18,14 @@ public class Application {
     public JPanel mainPanel;
 
     private JButton inputFile;
-    private JButton importKeyButton;
+    private JButton importCipherKeyButton;
     private JTextArea log;
     private JLabel infoInputFile;
     private JLabel infoBlocksCount;
     private JLabel infoFileSize;
     private JLabel infoBlockSize;
+    private JTextArea cipherKey;
+    private JButton enterCipherKey;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
@@ -39,13 +41,14 @@ public class Application {
 
 //        Buttons
         setIcon(inputFile, "file_in.png");
-        setIcon(importKeyButton, "cipher_key.png");
+        setIcon(importCipherKeyButton, "cipher_key.png");
+        setIcon(enterCipherKey, "keyboard.png");
 
 //        Info
         infoBlockSize.setText(Constants.BLOCK_SIZE + "x" + Constants.BLOCK_SIZE);
 
         inputFile.addActionListener(e -> inputFileDialog());
-        importKeyButton.addActionListener(e -> test());
+        importCipherKeyButton.addActionListener(e -> test());
     }
 
     public void inputFileDialog() {
@@ -96,11 +99,13 @@ public class Application {
         JMenu key = new JMenu("Key");
         menuBar.add(key);
 
-        JMenuItem key_item_1 = new JMenuItem("Import key");
-        JMenuItem key_item_2 = new JMenuItem("Export key");
+        JMenuItem key_item_1 = new JMenuItem("Import cipher key");
+        JMenuItem key_item_2 = new JMenuItem("Export cipher key");
+        JMenuItem key_item_3 = new JMenuItem("Enter key from keyboard");
 
         key.add(key_item_1);
         key.add(key_item_2);
+        key.add(key_item_3);
 
         frame.setJMenuBar(menuBar);
     }
