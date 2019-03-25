@@ -155,14 +155,18 @@ public class Application {
             encryption.encrypt();
             log("Encryption completed successfully.");
 
-            String encrypted_path = inputChooser.getSelectedFile().getAbsolutePath() + ".encrypted";
-            try {
-                DataUtils.saveFile(encryption.getBlocks(), encrypted_path);
-                log("Encrypted data saved: " + encrypted_path);
-            } catch (IOException ex) {
-                String message = "Could not save encrypted data: " + encrypted_path;
-                log(message);
-                JOptionPane.showMessageDialog(frame, message, "Save error", JOptionPane.ERROR_MESSAGE);
+            JFileChooser keyChooser = new JFileChooser();
+            int returnValue = keyChooser.showSaveDialog(mainPanel);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                String selectedPath = keyChooser.getSelectedFile().getAbsolutePath();
+                try {
+                    DataUtils.saveFile(encryption.getBlocks(), selectedPath);
+                    log("Encrypted data saved: " + selectedPath);
+                } catch (IOException ex) {
+                    String message = "Could not save file: " + selectedPath;
+                    log(message);
+                    JOptionPane.showMessageDialog(frame, message, "Save error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             canProcess = true;
             _updateButtons();
@@ -170,7 +174,32 @@ public class Application {
     }
 
     private void decrypt() {
+        if (key != null && blocks != null) {
+            canProcess = false;
+            _updateButtons();
 
+            log("Preparing decryption...");
+            Decryption decryption = new Decryption(blocks, key);
+            log("Starting decryption...");
+            decryption.decrypt();
+            log("Decryption completed successfully.");
+
+            JFileChooser keyChooser = new JFileChooser();
+            int returnValue = keyChooser.showSaveDialog(mainPanel);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                String selectedPath = keyChooser.getSelectedFile().getAbsolutePath();
+                try {
+                    DataUtils.saveFile(decryption.getBlocks(), selectedPath);
+                    log("Decrypted data saved: " + selectedPath);
+                } catch (IOException ex) {
+                    String message = "Could not save file: " + selectedPath;
+                    log(message);
+                    JOptionPane.showMessageDialog(frame, message, "Save error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            canProcess = true;
+            _updateButtons();
+        }
     }
 
     private void setIcon(JButton button, String path) {
