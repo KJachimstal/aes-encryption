@@ -30,6 +30,11 @@ public class DataUtils {
         return blocks;
     }
 
+    public static byte[] loadBytes(String filename) throws IOException {
+        Path path = Paths.get(filename);
+        return Files.readAllBytes(path);
+    }
+
     public static void saveFile(Block[] blocks, String filename) throws IOException {
         byte[] output = new byte[blocks.length * Constants.BLOCK_SIZE * Constants.BLOCK_SIZE];
 
@@ -45,6 +50,12 @@ public class DataUtils {
 
         try (FileOutputStream fos = new FileOutputStream(filename)) {
             fos.write(output);
+        }
+    }
+
+    public static void saveBytes(byte[] bytes, String filename) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(filename)) {
+            fos.write(bytes);
         }
     }
 }
