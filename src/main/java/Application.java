@@ -20,6 +20,7 @@ public class Application {
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
+    private JFileChooser inputChooser;
     private Block[] blocks;
 
     public Application(JFrame frame) {
@@ -34,14 +35,14 @@ public class Application {
     }
 
     public void inputFileDialog() {
-        JFileChooser fc = new JFileChooser();
-        int returnValue = fc.showOpenDialog(mainPanel);
+        inputChooser = new JFileChooser();
+        int returnValue = inputChooser.showOpenDialog(mainPanel);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            String selectedFile = fc.getSelectedFile().getPath();
+            String selectedFile = inputChooser.getSelectedFile().getPath();
             try {
                 blocks = DataUtils.loadFile(selectedFile);
                 String message = blocks.length + " data blocks have been loaded.";
-                log("File " + fc.getSelectedFile().getName() + " loaded.");
+                log("File " + inputChooser.getSelectedFile().getName() + " loaded.");
                 log(message);
             } catch (IOException ex) {
                 String message = "Could not load file: " + selectedFile;
@@ -69,8 +70,10 @@ public class Application {
         JMenu file = new JMenu("File");
         menuBar.add(file);
 
-        JMenuItem menuItem = new JMenuItem("...");
-        file.add(menuItem);
+        JMenuItem file_item_1 = new JMenuItem("Load file");
+        file_item_1.addActionListener(e -> inputFileDialog());
+
+        file.add(file_item_1);
 
 //        Key
         JMenu key = new JMenu("Key");
