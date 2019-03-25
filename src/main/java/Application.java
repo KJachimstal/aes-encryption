@@ -40,9 +40,13 @@ public class Application {
             String selectedFile = fc.getSelectedFile().getPath();
             try {
                 blocks = DataUtils.loadFile(selectedFile);
-                JOptionPane.showMessageDialog(frame, blocks.length + " data blocks have been loaded.", "File loaded", JOptionPane.INFORMATION_MESSAGE);
+                String message = blocks.length + " data blocks have been loaded.";
+                log("File " + fc.getSelectedFile().getName() + " loaded.");
+                log(message);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(frame, "Could not load file: " + selectedFile, "Loading error", JOptionPane.ERROR_MESSAGE);
+                String message = "Could not load file: " + selectedFile;
+                log(message);
+                JOptionPane.showMessageDialog(frame, message, "Loading error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
