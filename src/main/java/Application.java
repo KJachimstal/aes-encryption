@@ -1,6 +1,7 @@
 import aes.Block;
 import aes.Constants;
 import aes.DataUtils;
+import aes.Key;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,6 +31,7 @@ public class Application {
 
 //    Model
     private JFileChooser inputChooser;
+    private Key key;
     private Block[] blocks;
 
     public Application(JFrame frame) {
@@ -47,7 +49,9 @@ public class Application {
 //        Info
         infoBlockSize.setText(Constants.BLOCK_SIZE + "x" + Constants.BLOCK_SIZE);
 
+//        Actions
         inputFile.addActionListener(e -> inputFileDialog());
+        enterCipherKey.addActionListener(e -> enterCipherKey());
         importCipherKeyButton.addActionListener(e -> test());
     }
 
@@ -96,18 +100,40 @@ public class Application {
         file.add(file_item_1);
 
 //        Key
-        JMenu key = new JMenu("Key");
+        JMenu key = new JMenu("Cipher key");
         menuBar.add(key);
 
-        JMenuItem key_item_1 = new JMenuItem("Import cipher key");
-        JMenuItem key_item_2 = new JMenuItem("Export cipher key");
-        JMenuItem key_item_3 = new JMenuItem("Enter key from keyboard");
+        JMenuItem key_item_1 = new JMenuItem("Import key");
+        JMenuItem key_item_2 = new JMenuItem("Export key");
+        JMenuItem key_item_3 = new JMenuItem("Enter key");
+        key_item_3.addActionListener(e -> enterCipherKey());
 
         key.add(key_item_1);
         key.add(key_item_2);
         key.add(key_item_3);
 
         frame.setJMenuBar(menuBar);
+    }
+
+    private void enterCipherKey() {
+        String keyString = JOptionPane.showInputDialog(frame, "Enter cipher key (16 characters):");
+        if (keyString != null && keyString.length() == 16) {
+            updateCipherKey(keyString);
+            log("Cipher key added.");
+        } else if(keyString != null) {
+            JOptionPane.showMessageDialog(frame,"Cipher key must have exactly 16 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void updateCipherKey(String keyString) {
+        key = new Key(keyString);
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : keyString.toCharArray()) {
+            sb.append(String.format(String.format("0x%02X", (byte)c)));
+        }
+
+        cipherKey.setText(sb.toString());
     }
 
     private void setIcon(JButton button, String path) {
