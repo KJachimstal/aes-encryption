@@ -44,6 +44,14 @@ public class Key {
         return data;
     }
 
+    public byte[] getBytes() {
+        byte[] bytes = new byte[data.length];
+        for (int i = 0; i < data.length; i++) {
+            bytes[i] = (byte)(data[i] & 0xff);
+        }
+        return bytes;
+    }
+
     public int getRounds() {
         return rounds;
     }

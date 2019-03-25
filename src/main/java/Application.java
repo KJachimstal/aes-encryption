@@ -114,6 +114,26 @@ public class Application {
         }
     }
 
+    private void exportCipherKey() {
+        if (key != null) {
+            JFileChooser keyChooser = new JFileChooser();
+            int returnValue = keyChooser.showSaveDialog(mainPanel);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                String selectedPath = keyChooser.getSelectedFile().getAbsolutePath();
+                try {
+                    DataUtils.saveBytes(key.getBytes(), selectedPath);
+                    log("Cipher key exported.");
+                } catch (IOException ex) {
+                    String message = "Could not save file: " + selectedPath;
+                    log(message);
+                    JOptionPane.showMessageDialog(frame, message, "Save error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(frame,"Key doesn't exists. Please first enter cipher key.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void updateCipherKey(String keyString) {
         key = new Key(keyString);
         StringBuilder sb = new StringBuilder();
@@ -139,7 +159,7 @@ public class Application {
     }
 
     private void updateButtons() {
-        if (blocks.length > 0 && key != null) {
+        if (blocks != null && blocks.length > 0 && key != null) {
             canProcess = true;
         } else {
             canProcess = false;
@@ -174,6 +194,7 @@ public class Application {
         JMenuItem key_item_1 = new JMenuItem("Import key");
         key_item_1.addActionListener(e -> importCipherKey());
         JMenuItem key_item_2 = new JMenuItem("Export key");
+        key_item_2.addActionListener(e -> exportCipherKey());
         JMenuItem key_item_3 = new JMenuItem("Enter key");
         key_item_3.addActionListener(e -> enterCipherKey());
 
