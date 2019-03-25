@@ -9,19 +9,19 @@ class DataUtilsTest {
     @Test
     void loadFile() {
         try {
-            Block[] blocks_original = DataUtils.loadFile("data/input.txt");
-            Block[] blocks = DataUtils.loadFile("data/input.txt");
+            //Block[] blocks_original = DataUtils.loadFile("data/input.txt");
+            Block[] blocks = DataUtils.loadFile("data/image.jpg");
             Encryption encryption = new Encryption(blocks, new Key("secretpassword12"));
             encryption.encrypt();
-            DataUtils.saveFile(encryption.getBlocks(), "data/input.txt.encrypted");
-            System.out.println(blocks_original[0]);
+            DataUtils.saveFile(encryption.getBlocks(), "data/input.encrypted.jpg");
 
-            Decryption decryption = new Decryption(encryption.getBlocks(), new Key("secretpassword12"));
+            Block[] encrypted_blocks = DataUtils.loadFile("data/input.encrypted.jpg");
+
+            System.out.println(encryption.getBlocks()[0]);
+            System.out.println(encrypted_blocks[0]);
+            Decryption decryption = new Decryption(encrypted_blocks, new Key("secretpassword12"));
             decryption.decrypt();
-            DataUtils.saveFile(decryption.getBlocks(), "data/input.decrypted.txt");
-
-            System.out.println(decryption.getBlocks()[0]);
-
+            DataUtils.saveFile(decryption.getBlocks(), "data/input.decrypted.jpg");
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
