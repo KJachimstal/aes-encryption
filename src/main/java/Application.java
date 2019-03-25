@@ -27,12 +27,15 @@ public class Application {
     private JLabel infoBlockSize;
     private JTextArea cipherKey;
     private JButton enterCipherKey;
+    private JButton encryptButton;
+    private JButton decryptButton;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
     private JFileChooser inputChooser;
     private Key key;
     private Block[] blocks;
+    private boolean canProcess = false;
 
     public Application(JFrame frame) {
         this.frame = frame;
@@ -45,6 +48,9 @@ public class Application {
         setIcon(inputFile, "file_in.png");
         setIcon(importCipherKeyButton, "cipher_key.png");
         setIcon(enterCipherKey, "keyboard.png");
+
+        encryptButton.setEnabled(canProcess);
+        decryptButton.setEnabled(canProcess);
 
 //        Info
         infoBlockSize.setText(Constants.BLOCK_SIZE + "x" + Constants.BLOCK_SIZE);
@@ -67,7 +73,6 @@ public class Application {
                 log(message);
                 infoInputFile.setText(inputChooser.getSelectedFile().getName());
                 infoBlocksCount.setText(Integer.toString(blocks.length));
-                infoFileSize.setText(blocks.length * Constants.BLOCK_SIZE * Constants.BLOCK_SIZE + "B");
             } catch (IOException ex) {
                 String message = "Could not load file: " + selectedFile;
                 log(message);
@@ -134,6 +139,7 @@ public class Application {
         }
 
         cipherKey.setText(sb.toString());
+        updateButtons();
     }
 
     private void setIcon(JButton button, String path) {
@@ -146,5 +152,15 @@ public class Application {
 //            ...
             System.out.println(ex);
         }
+    }
+
+    private void updateButtons() {
+        if (blocks.length > 0 && key != null) {
+            canProcess = true;
+        } else {
+            canProcess = false;
+        }
+        encryptButton.setEnabled(canProcess);
+        decryptButton.setEnabled(canProcess);
     }
 }
