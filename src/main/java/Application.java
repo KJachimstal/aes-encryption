@@ -43,6 +43,8 @@ public class Application {
         log.append('[' + dateFormat.format(date) + "]: " + message + '\n');
     }
 
+    public void dispose() {}
+
     private void createMenu() {
         JMenuBar menuBar = new JMenuBar();
 

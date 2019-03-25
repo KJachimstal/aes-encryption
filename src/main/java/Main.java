@@ -11,5 +11,18 @@ public class Main {
         frame.setLocationByPlatform(true);
         frame.setSize(new Dimension(800, 500));
         frame.setVisible(true);
+
+        Thread t = new Thread(() -> {
+            while(true) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    application.dispose();
+                    System.exit(0);
+                }
+            }
+        });
+
+        t.start();
     }
 }
