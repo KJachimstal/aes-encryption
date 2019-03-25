@@ -58,7 +58,7 @@ public class Application {
 //        Actions
         inputFile.addActionListener(e -> inputFileDialog());
         enterCipherKey.addActionListener(e -> enterCipherKey());
-        importCipherKeyButton.addActionListener(e -> test());
+        importCipherKeyButton.addActionListener(e -> importCipherKey());
     }
 
     public void inputFileDialog() {
@@ -73,51 +73,13 @@ public class Application {
                 log(message);
                 infoInputFile.setText(inputChooser.getSelectedFile().getName());
                 infoBlocksCount.setText(Integer.toString(blocks.length));
+                updateButtons();
             } catch (IOException ex) {
                 String message = "Could not load file: " + selectedFile;
                 log(message);
                 JOptionPane.showMessageDialog(frame, message, "Loading error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-
-    public void test() {
-        log("a");
-    }
-
-    private void log(String message) {
-        Date date = new Date();
-        log.append('[' + dateFormat.format(date) + "]: " + message + '\n');
-    }
-
-    public void dispose() {}
-
-    private void createMenu() {
-        JMenuBar menuBar = new JMenuBar();
-
-//        File
-        JMenu file = new JMenu("File");
-        menuBar.add(file);
-
-        JMenuItem file_item_1 = new JMenuItem("Load file");
-        file_item_1.addActionListener(e -> inputFileDialog());
-
-        file.add(file_item_1);
-
-//        Key
-        JMenu key = new JMenu("Cipher key");
-        menuBar.add(key);
-
-        JMenuItem key_item_1 = new JMenuItem("Import key");
-        JMenuItem key_item_2 = new JMenuItem("Export key");
-        JMenuItem key_item_3 = new JMenuItem("Enter key");
-        key_item_3.addActionListener(e -> enterCipherKey());
-
-        key.add(key_item_1);
-        key.add(key_item_2);
-        key.add(key_item_3);
-
-        frame.setJMenuBar(menuBar);
     }
 
     private void enterCipherKey() {
@@ -127,6 +89,28 @@ public class Application {
             log("Cipher key added.");
         } else if(keyString != null) {
             JOptionPane.showMessageDialog(frame,"Cipher key must have exactly 16 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void importCipherKey() {
+        JFileChooser keyChooser = new JFileChooser();
+        int returnValue = keyChooser.showOpenDialog(mainPanel);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = keyChooser.getSelectedFile().getPath();
+            try {
+                byte[] bytes = DataUtils.loadBytes(selectedFile);
+                if (bytes.length == 16) {
+                    key = new Key(bytes);
+                    updateCipherKey(new String(bytes));
+                    log("Cipher key added.");
+                } else {
+                    JOptionPane.showMessageDialog(frame,"Cipher key must have exactly 16 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                String message = "Could not load file: " + selectedFile;
+                log(message);
+                JOptionPane.showMessageDialog(frame, message, "Loading error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -162,5 +146,41 @@ public class Application {
         }
         encryptButton.setEnabled(canProcess);
         decryptButton.setEnabled(canProcess);
+    }
+
+    private void log(String message) {
+        Date date = new Date();
+        log.append('[' + dateFormat.format(date) + "]: " + message + '\n');
+    }
+
+    public void dispose() {}
+
+    private void createMenu() {
+        JMenuBar menuBar = new JMenuBar();
+
+//        File
+        JMenu file = new JMenu("File");
+        menuBar.add(file);
+
+        JMenuItem file_item_1 = new JMenuItem("Load file");
+        file_item_1.addActionListener(e -> inputFileDialog());
+
+        file.add(file_item_1);
+
+//        Key
+        JMenu key = new JMenu("Cipher key");
+        menuBar.add(key);
+
+        JMenuItem key_item_1 = new JMenuItem("Import key");
+        key_item_1.addActionListener(e -> importCipherKey());
+        JMenuItem key_item_2 = new JMenuItem("Export key");
+        JMenuItem key_item_3 = new JMenuItem("Enter key");
+        key_item_3.addActionListener(e -> enterCipherKey());
+
+        key.add(key_item_1);
+        key.add(key_item_2);
+        key.add(key_item_3);
+
+        frame.setJMenuBar(menuBar);
     }
 }

@@ -18,6 +18,13 @@ public class Key {
         rounds = calcRounds(data.length);
     }
 
+    public Key(byte[] key) {
+        data = new short[key.length];
+        for (int i = 0; i < key.length; i++) {
+            data[i] = (short)(key[i] & 0xff);
+        }
+    }
+
     private int calcRounds(int key_length) {
         switch (key_length) {
             case 24:
