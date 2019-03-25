@@ -1,7 +1,4 @@
-import aes.Block;
-import aes.Constants;
-import aes.DataUtils;
-import aes.Key;
+import aes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,7 +20,6 @@ public class Application {
     private JTextArea log;
     private JLabel infoInputFile;
     private JLabel infoBlocksCount;
-    private JLabel infoFileSize;
     private JLabel infoBlockSize;
     private JTextArea cipherKey;
     private JButton enterCipherKey;
@@ -59,6 +55,8 @@ public class Application {
         inputFile.addActionListener(e -> inputFileDialog());
         enterCipherKey.addActionListener(e -> enterCipherKey());
         importCipherKeyButton.addActionListener(e -> importCipherKey());
+        encryptButton.addActionListener(e -> encrypt());
+        decryptButton.addActionListener(e -> decrypt());
     }
 
     public void inputFileDialog() {
@@ -102,7 +100,7 @@ public class Application {
                 if (bytes.length == 16) {
                     key = new Key(bytes);
                     updateCipherKey(new String(bytes));
-                    log("Cipher key added.");
+                    log("Cipher key imported.");
                 } else {
                     JOptionPane.showMessageDialog(frame,"Cipher key must have exactly 16 characters.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -139,11 +137,40 @@ public class Application {
         StringBuilder sb = new StringBuilder();
 
         for (char c : keyString.toCharArray()) {
-            sb.append(String.format(String.format("0x%02X", (byte)c)));
+            sb.append(String.format(String.format("0x%02X ", (byte)c)));
         }
 
         cipherKey.setText(sb.toString());
         updateButtons();
+    }
+
+    private void encrypt() {
+        if (key != null && blocks != null) {
+            canProcess = false;
+            _updateButtons();
+
+            log("Preparing encryption...");
+            Encryption encryption = new Encryption(blocks, key);
+            log("Starting encryption...");
+            encryption.encrypt();
+            log("Encryption completed successfully.");
+
+            String encrypted_path = inputChooser.getSelectedFile().getAbsolutePath() + ".encrypted";
+            try {
+                DataUtils.saveFile(encryption.getBlocks(), encrypted_path);
+                log("Encrypted data saved: " + encrypted_path);
+            } catch (IOException ex) {
+                String message = "Could not save encrypted data: " + encrypted_path;
+                log(message);
+                JOptionPane.showMessageDialog(frame, message, "Save error", JOptionPane.ERROR_MESSAGE);
+            }
+            canProcess = true;
+            _updateButtons();
+        }
+    }
+
+    private void decrypt() {
+
     }
 
     private void setIcon(JButton button, String path) {
@@ -164,6 +191,10 @@ public class Application {
         } else {
             canProcess = false;
         }
+        _updateButtons();
+    }
+
+    private void _updateButtons() {
         encryptButton.setEnabled(canProcess);
         decryptButton.setEnabled(canProcess);
     }
