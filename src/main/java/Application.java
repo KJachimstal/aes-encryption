@@ -1,8 +1,11 @@
 import aes.Block;
+import aes.Constants;
 import aes.DataUtils;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
+import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,9 +17,12 @@ public class Application {
 //    Main panel
     public JPanel mainPanel;
 
-    private JButton selectFile;
-    private JButton button1;
+    private JButton inputFile;
+    private JButton importKeyButton;
     private JTextArea log;
+    private JLabel infoInputFile;
+    private JLabel infoBlocksCount;
+    private JLabel infoFileSize;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
@@ -30,8 +36,12 @@ public class Application {
         DefaultCaret caret = (DefaultCaret) log.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-        selectFile.addActionListener(e -> inputFileDialog());
-        button1.addActionListener(e -> test());
+//        Buttons
+        setIcon(inputFile, "file_in.png");
+        setIcon(importKeyButton, "cipher_key.png");
+
+        inputFile.addActionListener(e -> inputFileDialog());
+        importKeyButton.addActionListener(e -> test());
     }
 
     public void inputFileDialog() {
@@ -44,6 +54,9 @@ public class Application {
                 String message = blocks.length + " data blocks have been loaded.";
                 log("File " + inputChooser.getSelectedFile().getName() + " loaded.");
                 log(message);
+                infoInputFile.setText(inputChooser.getSelectedFile().getName());
+                infoBlocksCount.setText(Integer.toString(blocks.length));
+                infoFileSize.setText(blocks.length * Constants.BLOCK_SIZE * Constants.BLOCK_SIZE + "B");
             } catch (IOException ex) {
                 String message = "Could not load file: " + selectedFile;
                 log(message);
@@ -86,5 +99,17 @@ public class Application {
         key.add(key_item_2);
 
         frame.setJMenuBar(menuBar);
+    }
+
+    private void setIcon(JButton button, String path) {
+        try {
+            Image img = ImageIO.read(getClass().getResource(path));
+            img = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            ImageIcon imgIcon = new ImageIcon(img);
+            button.setIcon(imgIcon);
+        } catch (Exception ex) {
+//            ...
+            System.out.println(ex);
+        }
     }
 }
