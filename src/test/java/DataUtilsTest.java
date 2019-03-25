@@ -9,7 +9,7 @@ class DataUtilsTest {
     void loadFile() {
         try {
             //aes.Block[] blocks_original = aes.DataUtils.loadFile("data/input.txt");
-            Block[] blocks = DataUtils.loadFile("data/image.jpg");
+            Block[] blocks = DataUtils.loadFile("data/input.jpg");
             Encryption encryption = new Encryption(blocks, new Key("secretpassword12"));
             encryption.encrypt();
             DataUtils.saveFile(encryption.getBlocks(), "data/input.encrypted.jpg");
