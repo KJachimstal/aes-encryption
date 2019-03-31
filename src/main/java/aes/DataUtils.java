@@ -7,6 +7,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DataUtils {
+
+    public static Block[] loadText(String text) {
+        char[] chars = text.toCharArray();
+        int numberOfBlocks = (int) Math.ceil(chars.length / (double)(Constants.BLOCK_SIZE * Constants.BLOCK_SIZE));
+
+        Block[] blocks = new Block[numberOfBlocks];
+        int processed = 0, bi = 0;
+
+        while (processed < chars.length - 1) {
+            short[][] tmp = new short[Constants.BLOCK_SIZE][Constants.BLOCK_SIZE];
+            for (int i = 0; i < Constants.BLOCK_SIZE; i++) {
+                for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
+                    if (processed < chars.length) {
+//                        System.out.print((char)bytes[processed]);
+                        tmp[j][i] = (short)(chars[processed++] & 0xff);
+                    }
+                }
+            }
+            blocks[bi++] = new Block(tmp);
+        }
+
+        return blocks;
+    }
+
     public static Block[] loadFile(String filename) throws IOException {
         Path path = Paths.get(filename);
         byte[] bytes = Files.readAllBytes(path);

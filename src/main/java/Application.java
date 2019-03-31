@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ public class Application {
     private JButton encryptButton;
     private JButton decryptButton;
     private JButton inputText;
+    private JTextArea inputTextArea;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
@@ -85,15 +87,12 @@ public class Application {
     }
 
     public void inputTextDialog() {
-        JFrame frame = new JFrame("Enter text...");
-        TextForm form = new TextForm();
-        frame.setContentPane(form.textPanel);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
-        frame.setLocationByPlatform(true);
-        frame.setSize(new Dimension(400, 300));
-        frame.setVisible(true);
+        String input = inputTextArea.getText();
+        blocks = DataUtils.loadText(input);
+        log("Text has been loaded.");
+        log(blocks.length + " data blocks have been loaded.");
     }
+
 
     private void enterCipherKey() {
         String keyString = JOptionPane.showInputDialog(frame, "Enter cipher key (16 characters):");
