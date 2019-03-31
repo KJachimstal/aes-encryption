@@ -1,4 +1,5 @@
 import aes.*;
+import org.w3c.dom.Text;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -84,7 +85,14 @@ public class Application {
     }
 
     public void inputTextDialog() {
-
+        JFrame frame = new JFrame("Enter text...");
+        TextForm form = new TextForm();
+        frame.setContentPane(form.textPanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setSize(new Dimension(400, 300));
+        frame.setVisible(true);
     }
 
     private void enterCipherKey() {
