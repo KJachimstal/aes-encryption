@@ -21,7 +21,7 @@ public class DataUtils {
                 for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
                     if (processed < chars.length) {
 //                        System.out.print((char)bytes[processed]);
-                        tmp[j][i] = (short)(chars[processed++] & 0xff);
+                        tmp[j][i] = (short)chars[processed++];
                     }
                 }
             }
@@ -29,6 +29,18 @@ public class DataUtils {
         }
 
         return blocks;
+    }
+
+    public static String saveText(Block[] blocks) {
+        StringBuilder sb = new StringBuilder();
+        for (Block b : blocks) {
+            for (int i = 0; i < Constants.BLOCK_SIZE; i++) {
+                for (int j = 0; j < Constants.BLOCK_SIZE; j++) {
+                    sb.append((char) b.getData()[i][j]);
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public static Block[] loadFile(String filename) throws IOException {

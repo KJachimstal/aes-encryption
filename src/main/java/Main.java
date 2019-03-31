@@ -9,7 +9,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationByPlatform(true);
-        frame.setSize(new Dimension(800, 500));
+        frame.setSize(new Dimension(800, 600));
         frame.setVisible(true);
 
         Thread t = new Thread(() -> {
