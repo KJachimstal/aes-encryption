@@ -25,6 +25,7 @@ public class Application {
     private JButton enterCipherKey;
     private JButton encryptButton;
     private JButton decryptButton;
+    private JButton inputText;
     private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    Model
@@ -42,6 +43,7 @@ public class Application {
 
 //        Buttons
         setIcon(inputFile, "file_in.png");
+        setIcon(inputText, "keyboard.png");
         setIcon(importCipherKeyButton, "cipher_key.png");
         setIcon(enterCipherKey, "keyboard.png");
 
