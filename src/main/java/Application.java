@@ -55,6 +55,7 @@ public class Application {
 
 //        Actions
         inputFile.addActionListener(e -> inputFileDialog());
+        inputText.addActionListener(e -> inputTextDialog());
         enterCipherKey.addActionListener(e -> enterCipherKey());
         importCipherKeyButton.addActionListener(e -> importCipherKey());
         encryptButton.addActionListener(e -> encrypt());
@@ -80,6 +81,10 @@ public class Application {
                 JOptionPane.showMessageDialog(frame, message, "Loading error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public void inputTextDialog() {
+
     }
 
     private void enterCipherKey() {
